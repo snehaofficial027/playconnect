@@ -16,7 +16,7 @@ import MyTournaments from "./pages/MyTournaments";
 import TournamentDetails from "./pages/TournamentDetails";
 import GoogleSuccess from "./pages/GoogleSuccess";
 import AISuggestions from "./pages/AISuggestions";
-import AI from "./pages/AI";
+import ai from "./pages/ai";
 import VenueList from "./pages/VenueList";
 import VenueBooking from "./pages/VenueBooking";
 import AdminRoute from "./components/AdminRoute";
