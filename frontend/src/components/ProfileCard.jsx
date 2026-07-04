@@ -12,12 +12,9 @@ import { useState } from "react";
 import ProfileSetup from "./ProfileSetup";
 
 function ProfileCard() {
-  const [editing, setEditing] =
-    useState(false);
+  const [editing, setEditing] = useState(false);
 
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const profileCompleted =
     user?.city &&
@@ -28,9 +25,7 @@ function ProfileCard() {
   if (!profileCompleted || editing) {
     return (
       <ProfileSetup
-        onProfileSaved={() =>
-          setEditing(false)
-        }
+        onProfileSaved={() => setEditing(false)}
       />
     );
   }
@@ -45,12 +40,12 @@ function ProfileCard() {
 
       <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-black/10 rounded-full blur-3xl"></div>
 
-      <div className="relative p-8 text-white">
+      <div className="relative p-5 sm:p-8 text-white">
 
-        <div className="flex flex-col lg:flex-row items-center gap-8">
+        <div className="flex flex-col xl:flex-row items-center gap-8">
 
           {/* Profile Image */}
-          <div className="relative">
+          <div className="relative flex-shrink-0">
 
             <img
               src={
@@ -59,43 +54,43 @@ function ProfileCard() {
                   : `https://ui-avatars.com/api/?name=${user?.name}&background=2563EB&color=fff&size=256`
               }
               alt="profile"
-              className="w-36 h-36 rounded-full object-cover border-4 border-white shadow-xl"
+              className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-white shadow-xl"
             />
 
-            <div className="absolute bottom-3 right-3 w-5 h-5 bg-green-400 rounded-full border-2 border-white"></div>
+            <div className="absolute bottom-2 right-2 w-5 h-5 bg-green-400 rounded-full border-2 border-white"></div>
 
           </div>
 
           {/* User Info */}
-          <div className="flex-1 text-center lg:text-left">
+          <div className="flex-1 text-center xl:text-left">
 
-            <h2 className="text-4xl font-bold">
+            <h2 className="text-3xl sm:text-4xl font-bold break-words">
               {user?.name}
             </h2>
 
-            <p className="text-blue-100 mt-2">
+            <p className="text-blue-100 mt-2 text-sm sm:text-base">
               {user?.sport} • {user?.skillLevel}
             </p>
 
-            <div className="flex flex-wrap justify-center lg:justify-start gap-2 mt-4">
+            <div className="flex flex-wrap justify-center xl:justify-start gap-2 mt-4">
 
-              <span className="bg-green-500 px-3 py-1 rounded-full text-sm">
+              <span className="bg-green-500 px-3 py-1 rounded-full text-xs sm:text-sm">
                 ✅ Verified Player
               </span>
 
-              <span className="bg-orange-500 px-3 py-1 rounded-full text-sm">
+              <span className="bg-orange-500 px-3 py-1 rounded-full text-xs sm:text-sm">
                 ⭐ {user?.skillLevel}
               </span>
 
-              <span className="bg-purple-500 px-3 py-1 rounded-full text-sm">
+              <span className="bg-purple-500 px-3 py-1 rounded-full text-xs sm:text-sm">
                 🏆 Sports Enthusiast
               </span>
 
             </div>
 
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-5">
+            <div className="flex flex-wrap justify-center xl:justify-start gap-3 mt-5">
 
-              <span className="bg-white/20 px-4 py-2 rounded-full">
+              <span className="bg-white/20 px-4 py-2 rounded-full text-sm">
 
                 <FaMapMarkerAlt className="inline mr-2" />
 
@@ -103,7 +98,7 @@ function ProfileCard() {
 
               </span>
 
-              <span className="bg-white/20 px-4 py-2 rounded-full">
+              <span className="bg-white/20 px-4 py-2 rounded-full text-sm">
 
                 <FaFutbol className="inline mr-2" />
 
@@ -117,10 +112,8 @@ function ProfileCard() {
 
           {/* Edit Button */}
           <button
-            onClick={() =>
-              setEditing(true)
-            }
-            className="bg-white text-blue-700 px-5 py-3 rounded-xl font-semibold flex items-center gap-2 hover:scale-105 transition"
+            onClick={() => setEditing(true)}
+            className="bg-white text-blue-700 px-5 py-3 rounded-xl font-semibold flex items-center gap-2 hover:scale-105 transition w-full sm:w-auto justify-center"
           >
             <FaEdit />
             Edit Profile
@@ -131,11 +124,11 @@ function ProfileCard() {
         {/* Bio */}
         <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-5">
 
-          <h3 className="font-bold text-xl mb-3">
+          <h3 className="font-bold text-lg sm:text-xl mb-3">
             About Me
           </h3>
 
-          <p>
+          <p className="text-sm sm:text-base leading-7 break-words">
             {user?.bio}
           </p>
 
@@ -144,21 +137,21 @@ function ProfileCard() {
         {/* Achievements */}
         <div className="mt-6 bg-white/10 backdrop-blur-md rounded-2xl p-5">
 
-          <h3 className="font-bold text-xl mb-4">
+          <h3 className="font-bold text-lg sm:text-xl mb-4">
             Achievements 🏆
           </h3>
 
           <div className="flex flex-wrap gap-3">
 
-            <span className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold">
+            <span className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold text-sm">
               First Match
             </span>
 
-            <span className="bg-blue-500 px-4 py-2 rounded-full">
+            <span className="bg-blue-500 px-4 py-2 rounded-full text-sm">
               Active Member
             </span>
 
-            <span className="bg-green-500 px-4 py-2 rounded-full">
+            <span className="bg-green-500 px-4 py-2 rounded-full text-sm">
               Profile Complete
             </span>
 
@@ -167,7 +160,7 @@ function ProfileCard() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
 
           <div className="bg-white/10 rounded-2xl p-4 text-center">
 
@@ -176,11 +169,13 @@ function ProfileCard() {
               size={22}
             />
 
-            <h3 className="text-2xl font-bold">
+            <h3 className="text-xl sm:text-2xl font-bold">
               4.8
             </h3>
 
-            <p>Rating</p>
+            <p className="text-sm">
+              Rating
+            </p>
 
           </div>
 
@@ -191,11 +186,13 @@ function ProfileCard() {
               size={22}
             />
 
-            <h3 className="text-2xl font-bold">
+            <h3 className="text-xl sm:text-2xl font-bold">
               {user?.connections?.length || 0}
             </h3>
 
-            <p>Connections</p>
+            <p className="text-sm">
+              Connections
+            </p>
 
           </div>
 
@@ -206,11 +203,13 @@ function ProfileCard() {
               size={22}
             />
 
-            <h3 className="text-2xl font-bold">
+            <h3 className="text-xl sm:text-2xl font-bold">
               0
             </h3>
 
-            <p>Matches</p>
+            <p className="text-sm">
+              Matches
+            </p>
 
           </div>
 
@@ -221,11 +220,13 @@ function ProfileCard() {
               size={22}
             />
 
-            <h3 className="text-2xl font-bold">
+            <h3 className="text-xl sm:text-2xl font-bold">
               100%
             </h3>
 
-            <p>Active</p>
+            <p className="text-sm">
+              Active
+            </p>
 
           </div>
 

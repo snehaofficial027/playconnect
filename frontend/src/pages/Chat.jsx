@@ -34,161 +34,191 @@ function Chat() {
   const user =
     JSON.parse(localStorage.getItem("user"));
 
-  const [messages,setMessages]=useState([]);
+  const [messages, setMessages] =
+    useState([]);
 
-  const [text,setText]=useState("");
+  const [text, setText] =
+    useState("");
 
-  const [typing,setTyping]=useState(false);
+  const [typing, setTyping] =
+    useState(false);
 
-  const [onlineUsers,setOnlineUsers]=
-  useState([]);
+  const [onlineUsers, setOnlineUsers] =
+    useState([]);
 
-  const bottomRef=useRef(null);
+  const bottomRef =
+    useRef(null);
 
-  useEffect(()=>{
+  useEffect(() => {
 
     loadMessages();
 
-    socket.emit("join",user.id);
+    socket.emit("join", user.id);
 
-    socket.on("receiveMessage",(message)=>{
+    socket.on(
+      "receiveMessage",
+      (message) => {
 
-      if(
-        message.sender===id ||
-        message.sender===user.id
-      ){
+        if (
+          message.sender === id ||
+          message.sender === user.id
+        ) {
 
-        setMessages(prev=>[
-          ...prev,
-          message
-        ]);
+          setMessages((prev) => [
+            ...prev,
+            message,
+          ]);
 
-      }
-
-    });
-
-    socket.on("onlineUsers",(users)=>{
-
-      setOnlineUsers(users);
-
-    });
-
-    socket.on("typing",(data)=>{
-
-      if(data.senderId===id){
-
-        setTyping(true);
+        }
 
       }
+    );
 
-    });
+    socket.on(
+      "onlineUsers",
+      (users) => {
 
-    socket.on("stopTyping",(data)=>{
-
-      if(data.senderId===id){
-
-        setTyping(false);
+        setOnlineUsers(users);
 
       }
+    );
 
-    });
+    socket.on(
+      "typing",
+      (data) => {
 
-    return ()=>{
+        if (
+          data.senderId === id
+        ) {
 
-      socket.off("receiveMessage");
-      socket.off("onlineUsers");
+          setTyping(true);
+
+        }
+
+      }
+    );
+
+    socket.on(
+      "stopTyping",
+      (data) => {
+
+        if (
+          data.senderId === id
+        ) {
+
+          setTyping(false);
+
+        }
+
+      }
+    );
+
+    return () => {
+
+      socket.off(
+        "receiveMessage"
+      );
+
+      socket.off(
+        "onlineUsers"
+      );
+
       socket.off("typing");
-      socket.off("stopTyping");
+
+      socket.off(
+        "stopTyping"
+      );
 
     };
 
-  },[id]);
+  }, [id]);
 
-  useEffect(()=>{
+  useEffect(() => {
 
     bottomRef.current?.scrollIntoView({
-
-      behavior:"smooth"
-
+      behavior: "smooth",
     });
 
-  },[messages]);
+  }, [messages]);
 
-  const loadMessages=
-  async()=>{
+  const loadMessages =
+    async () => {
 
-    try{
+      try {
 
-      const res=
-      await getMessages(id);
+        const res =
+          await getMessages(id);
 
-      setMessages(
-      res.data.messages);
+        setMessages(
+          res.data.messages
+        );
 
-    }
+      } catch (error) {
 
-    catch(error){
+        console.log(error);
 
-      console.log(error);
+      }
 
-    }
+    };
 
-  };
+  const handleSend =
+    async () => {
 
-  const handleSend=
-  async()=>{
+      if (!text.trim())
+        return;
 
-    if(!text.trim()) return;
+      try {
 
-    try{
+        const res =
+          await sendMessage(
+            id,
+            text
+          );
 
-      const res=
-      await sendMessage(id,text);
+        socket.emit(
+          "sendMessage",
+          {
+            ...res.data.message,
+            receiverId: id,
+          }
+        );
 
-      socket.emit("sendMessage",{
+        setMessages((prev) => [
+          ...prev,
+          res.data.message,
+        ]);
 
-        ...res.data.message,
+        setText("");
 
-        receiverId:id,
+        socket.emit(
+          "stopTyping",
+          {
+            senderId: user.id,
+            receiverId: id,
+          }
+        );
 
-      });
+      } catch (error) {
 
-      setMessages(prev=>[
-        ...prev,
-        res.data.message
-      ]);
+        console.log(error);
 
-      setText("");
+      }
 
-      socket.emit("stopTyping",{
+    };
 
-        senderId:user.id,
-
-        receiverId:id,
-
-      });
-
-    }
-
-    catch(error){
-
-      console.log(error);
-
-    }
-
-  };
-
-    return (
+  return (
 
     <div className="min-h-screen bg-slate-100 flex flex-col">
 
       {/* HEADER */}
 
-      <div className="bg-white shadow-md px-6 py-4 flex items-center gap-4">
+      <div className="bg-white shadow-md px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4 sticky top-0 z-10">
 
         <button
-          onClick={() => navigate("/connections")}
-          className="text-2xl"
+          onClick={() =>
+            navigate("/connections")
+          }
+          className="text-xl sm:text-2xl"
         >
           ⬅️
         </button>
@@ -199,39 +229,31 @@ function Chat() {
             `https://ui-avatars.com/api/?name=${playerName}`
           }
           alt=""
-          className="w-12 h-12 rounded-full object-cover"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
         />
 
-        <div>
+        <div className="flex-1 min-w-0">
 
-          <h2 className="font-bold text-lg">
-
+          <h2 className="font-bold text-base sm:text-lg truncate">
             {playerName}
-
           </h2>
 
           <p
-            className={`text-sm font-semibold ${
+            className={`text-xs sm:text-sm font-semibold ${
               onlineUsers.includes(id)
                 ? "text-green-500"
                 : "text-gray-400"
             }`}
           >
-
             {onlineUsers.includes(id)
               ? "🟢 Online"
               : "⚫ Offline"}
-
           </p>
 
           {typing && (
-
-            <p className="text-blue-500 text-sm animate-pulse">
-
+            <p className="text-blue-500 text-xs sm:text-sm animate-pulse">
               ✍️ Typing...
-
             </p>
-
           )}
 
         </div>
@@ -240,7 +262,9 @@ function Chat() {
 
       {/* MESSAGES */}
 
-      <div className="flex-1 overflow-y-auto bg-slate-100 p-6">
+            {/* MESSAGES */}
+
+      <div className="flex-1 overflow-y-auto bg-slate-100 p-3 sm:p-4 lg:p-6">
 
         {messages.map((msg) => (
 
@@ -254,34 +278,33 @@ function Chat() {
           >
 
             <div
-              className={`max-w-sm px-4 py-3 rounded-2xl shadow ${
+              className={`max-w-[85%] sm:max-w-sm lg:max-w-md px-4 py-3 rounded-2xl shadow break-words ${
                 msg.sender === user.id
                   ? "bg-blue-600 text-white"
                   : "bg-white text-black"
               }`}
             >
 
-              <p>{msg.text}</p>
+              <p className="text-sm sm:text-base">
+                {msg.text}
+              </p>
 
               <div className="flex justify-end items-center gap-1 mt-2">
 
-                <p className="text-[11px] opacity-70">
+                <p className="text-[10px] sm:text-[11px] opacity-70">
 
                   {new Date(
                     msg.createdAt
                   ).toLocaleTimeString([], {
-
                     hour: "2-digit",
-
                     minute: "2-digit",
-
                   })}
 
                 </p>
 
                 {msg.sender === user.id && (
 
-                  <span className="text-[11px]">
+                  <span className="text-[10px] sm:text-[11px]">
 
                     {msg.read
                       ? "✓✓"
@@ -305,68 +328,70 @@ function Chat() {
 
       </div>
 
-            {/* INPUT */}
+      {/* INPUT */}
 
-      <div className="bg-white border-t p-4 flex gap-3">
+      <div className="bg-white border-t p-3 sm:p-4">
 
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => {
+        <div className="flex items-center gap-2 sm:gap-3">
 
-            setText(e.target.value);
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => {
 
-            socket.emit("typing", {
+              setText(e.target.value);
 
-              senderId: user.id,
-
-              receiverId: id,
-
-            });
-
-            clearTimeout(window.typingTimeout);
-
-            window.typingTimeout = setTimeout(() => {
-
-              socket.emit("stopTyping", {
-
+              socket.emit("typing", {
                 senderId: user.id,
-
                 receiverId: id,
-
               });
 
-            }, 1000);
+              clearTimeout(window.typingTimeout);
 
-          }}
+              window.typingTimeout =
+                setTimeout(() => {
 
-          onKeyDown={(e) => {
+                  socket.emit(
+                    "stopTyping",
+                    {
+                      senderId: user.id,
+                      receiverId: id,
+                    }
+                  );
 
-            if (e.key === "Enter") {
+                }, 1000);
 
-              handleSend();
+            }}
 
-            }
+            onKeyDown={(e) => {
 
-          }}
+              if (e.key === "Enter") {
 
-          placeholder="Type a message..."
+                handleSend();
 
-          className="flex-1 border rounded-full px-5 py-3 outline-none"
+              }
 
-        />
+            }}
 
-        <button
+            placeholder="Type a message..."
 
-          onClick={handleSend}
+            className="flex-1 border rounded-full px-4 sm:px-5 py-3 outline-none text-sm sm:text-base"
 
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-full"
+          />
 
-        >
+          <button
 
-          Send
+            onClick={handleSend}
 
-        </button>
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 sm:px-7 py-3 rounded-full font-semibold transition whitespace-nowrap"
+
+          >
+
+            Send
+
+          </button>
+
+        </div>
 
       </div>
 

@@ -1,86 +1,111 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-
 import { getAISuggestion } from "../api/aiApi";
 
 function AISuggestions() {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [answer,setAnswer]=useState("");
+  const [answer, setAnswer] = useState("");
 
-  const handleAI = async()=>{
+  const handleAI = async () => {
 
-    try{
+    try {
 
       setLoading(true);
 
       const res = await getAISuggestion({
 
-        sport:user.sport,
+        sport: user.sport,
 
-        city:user.city,
+        city: user.city,
 
-        skillLevel:user.skillLevel
+        skillLevel: user.skillLevel,
 
       });
 
       setAnswer(res.data.suggestion);
 
-    }
-
-    catch(error){
+    } catch (error) {
 
       console.log(error);
 
       alert("AI Error");
 
-    }
-
-    finally{
+    } finally {
 
       setLoading(false);
 
     }
 
-  }
+  };
 
-  return(
-
+  return (
     <>
+      <Header />
 
-    <Header/>
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-green-50 px-4 sm:px-6 py-10">
 
-    <div className="min-h-screen bg-slate-100 p-10">
+        <div className="max-w-5xl mx-auto">
 
-      <div className="max-w-5xl mx-auto">
+          <div className="text-center">
 
-        <h1 className="text-5xl font-bold text-center mb-10">
+            <h1 className="text-3xl sm:text-5xl font-bold">
 
-          🤖 AI Sports Assistant
+              🤖 AI Sports Assistant
 
-        </h1>
+            </h1>
 
-        <div className="bg-white rounded-3xl shadow-xl p-8">
+            <p className="text-slate-500 mt-3">
 
-          <button
+              Personalized recommendations based on your profile.
 
-          onClick={handleAI}
+            </p>
 
-          className="bg-blue-600 text-white px-8 py-4 rounded-xl"
+          </div>
 
-          >
+          <div className="bg-white rounded-3xl shadow-xl mt-10 p-6 sm:p-8">
 
-            {loading ? "Thinking..." : "Generate AI Suggestions"}
+            <div className="flex justify-center">
 
-          </button>
+              <button
 
-          <div className="mt-8 whitespace-pre-wrap leading-8">
+                onClick={handleAI}
 
-            {answer}
+                disabled={loading}
+
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-8 py-4 rounded-xl font-semibold transition"
+
+              >
+
+                {loading ? "🤖 Thinking..." : "Generate AI Suggestions"}
+
+              </button>
+
+            </div>
+
+            {answer && (
+
+              <div className="mt-8 bg-slate-50 border rounded-2xl p-6">
+
+                <h2 className="text-2xl font-bold mb-4">
+
+                  AI Recommendation
+
+                </h2>
+
+                <div className="whitespace-pre-wrap leading-8 text-slate-700">
+
+                  {answer}
+
+                </div>
+
+              </div>
+
+            )}
 
           </div>
 
@@ -88,14 +113,9 @@ function AISuggestions() {
 
       </div>
 
-    </div>
-
-    <Footer/>
-
+      <Footer />
     </>
-
   );
-
 }
 
 export default AISuggestions;

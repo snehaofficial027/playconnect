@@ -74,17 +74,17 @@ const ManageTournaments = () => {
 
   return (
 
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-slate-100">
 
       <Sidebar />
 
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8">
 
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-5 mb-8">
 
           <div>
 
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-3xl sm:text-4xl font-bold">
               🏆 Tournament Management
             </h1>
 
@@ -93,7 +93,6 @@ const ManageTournaments = () => {
               <span className="font-bold text-blue-600 ml-2">
                 {filtered.length}
               </span>
-
             </p>
 
           </div>
@@ -105,115 +104,53 @@ const ManageTournaments = () => {
             onChange={(e) =>
               setSearch(e.target.value)
             }
-            className="border rounded-xl px-5 py-3 w-80"
+            className="w-full lg:w-80 border rounded-xl px-5 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
           />
 
         </div>
 
-        <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
           {filtered.map((tournament) => (
 
             <div
               key={tournament._id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden"
+              className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition overflow-hidden"
             >
 
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-5">
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
 
                 <h2 className="text-2xl font-bold">
-
                   {tournament.title}
-
                 </h2>
 
                 <p className="mt-2">
-
                   🏆 {tournament.sport}
-
                 </p>
 
               </div>
 
-              <div className="p-5 space-y-3">
-
-                <p>
-
-                  📍 <b>City :</b>
-
-                  {" "}
-
-                  {tournament.city}
-
-                </p>
-
-                <p>
-
-                  📅 <b>Date :</b>
-
-                  {" "}
-
-                  {new Date(
-                    tournament.date
-                  ).toLocaleDateString()}
-
-                </p>
-
-                <p>
-
-                  👤 <b>Organizer :</b>
-
-                  {" "}
-
-                  {tournament.createdBy?.name || "Unknown"}
-
-                </p>
-
-                <p>
-
-                  👥 <b>Participants :</b>
-
-                  {" "}
-
-                  {tournament.participants?.length || 0}
-
-                  {" / "}
-
-                  {tournament.maxPlayers}
-
-                </p>
-
-                <p>
-
+              <div className="p-6 space-y-3">
+                                <p>
                   💰 <b>Entry Fee :</b>
-
                   <span className="text-green-600 font-bold">
-
                     ₹ {tournament.fee}
-
                   </span>
-
                 </p>
 
-                <p>
-
+                <p className="break-words">
                   📝 <b>Description :</b>
-
                   <br />
-
                   {tournament.description || "No Description"}
-
                 </p>
 
                 <button
                   onClick={() =>
                     handleDelete(tournament._id)
                   }
-                  className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold"
+                  className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold transition"
                 >
-
                   🗑 Delete Tournament
-
                 </button>
 
               </div>
@@ -224,9 +161,19 @@ const ManageTournaments = () => {
 
           {filtered.length === 0 && (
 
-            <div className="col-span-3 text-center text-gray-500 text-xl">
+            <div className="lg:col-span-2 xl:col-span-3 text-center py-16">
 
-              No Tournament Found
+              <div className="text-6xl mb-4">
+                🏆
+              </div>
+
+              <h2 className="text-2xl font-bold text-gray-700">
+                No Tournament Found
+              </h2>
+
+              <p className="text-gray-500 mt-2">
+                Try changing your search.
+              </p>
 
             </div>
 

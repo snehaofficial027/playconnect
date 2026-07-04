@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import {getConnections,} from "../api/connectionApi";
+import { getConnections } from "../api/connectionApi";
 
 function Connections() {
-
-  const [connections,
-    setConnections] =
+  const [connections, setConnections] =
     useState([]);
 
   const user = JSON.parse(
@@ -19,109 +16,120 @@ function Connections() {
     loadConnections();
   }, []);
 
-  const loadConnections =
-    async () => {
-
+  const loadConnections = async () => {
+    try {
       const res =
         await getConnections();
 
       setConnections(
         res.data.connections
       );
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
       <Header />
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-100 to-blue-50 p-10">
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 to-blue-50 py-6 sm:py-8 lg:py-10 px-4 sm:px-6">
 
-        <div className="text-center mb-10">
+        <div className="max-w-7xl mx-auto">
 
-          <h1 className="text-5xl font-bold text-slate-900">
-            My Connections
-          </h1>
+          <div className="text-center mb-8 sm:mb-10">
 
-          <p className="text-slate-500 mt-3">
-            Players connected with you
-          </p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">
+              My Connections
+            </h1>
 
-        </div>
-
-        {connections.length === 0 ? (
-
-          <div className="bg-white rounded-3xl shadow-lg p-10 text-center">
-
-            <h2 className="text-2xl font-bold">
-              No Connections Yet
-            </h2>
-
-            <p className="text-gray-500 mt-2">
-              Accept requests to build your network.
+            <p className="text-slate-500 mt-3 text-sm sm:text-base">
+              Players connected with you
             </p>
 
           </div>
 
-        ) : (
+          {connections.length === 0 ? (
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-3xl shadow-lg p-8 sm:p-10 text-center">
 
-            {connections.map((conn) => {
+              <h2 className="text-2xl font-bold">
+                No Connections Yet
+              </h2>
 
-              const player =
-                conn.sender._id === user.id
-                  ? conn.receiver
-                  : conn.sender;
+              <p className="text-gray-500 mt-3">
+                Accept requests to build your network.
+              </p>
 
-              return (
+            </div>
 
-                <div
-                  key={conn._id}
-                  className="bg-white rounded-3xl shadow-lg p-6 hover:shadow-2xl transition"
-                >
+          ) : (
 
-                  <div className="flex flex-col items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <img
-                      src={
-                        player.profileImage ||
-                        `https://ui-avatars.com/api/?name=${player.name}`
-                      }
-                      alt=""
-                      className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
-                    />
+              {connections.map((conn) => {
 
-                    <h2 className="mt-4 text-2xl font-bold">
-                      {player.name}
-                    </h2>
+                const player =
+                  conn.sender._id === user.id
+                    ? conn.receiver
+                    : conn.sender;
 
-                    <p className="text-gray-500">
-                      📍 {player.city}
-                    </p>
+                return (
 
-                    <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full mt-3">
-                      {player.sport}
-                    </span>
+                  <div
+                    key={conn._id}
+                    className="bg-white rounded-3xl shadow-lg p-5 sm:p-6 hover:shadow-2xl hover:-translate-y-1 transition duration-300"
+                  >
 
-                    <Link to={`/chat/${player._id}`} state={{playerName: player.name,
-                    playerImage: player.profileImage,
-                }}
->
-                <button className="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700">
-                     💬 Chat
-                </button>
-                    </Link>
-                    
+                    <div className="flex flex-col items-center">
+
+                      <img
+                        src={
+                          player.profileImage ||
+                          `https://ui-avatars.com/api/?name=${player.name}`
+                        }
+                        alt={player.name}
+                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-blue-500"
+                      />
+
+                      <h2 className="mt-4 text-xl sm:text-2xl font-bold text-center break-words">
+                        {player.name}
+                      </h2>
+
+                      <p className="text-gray-500 text-center mt-2">
+                        📍 {player.city || "City Not Added"}
+                      </p>
+
+                      <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full mt-4 text-sm">
+                        {player.sport || "Sport"}
+                      </span>
+
+                      <Link
+                        to={`/chat/${player._id}`}
+                        state={{
+                          playerName: player.name,
+                          playerImage:
+                            player.profileImage,
+                        }}
+                        className="w-full"
+                      >
+                        <button className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition">
+                          💬 Chat
+                        </button>
+                      </Link>
+
+                    </div>
+
                   </div>
 
-                </div>
+                );
+              })}
 
-              );
-            })}
+            </div>
 
-          </div>
+          )}
 
-        )}
+        </div>
 
       </div>
 

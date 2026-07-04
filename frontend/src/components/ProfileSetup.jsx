@@ -126,7 +126,7 @@ function ProfileSetup({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+    <div className="relative overflow-hidden rounded-3xl shadow-2xl mx-3 sm:mx-0">
 
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-700 via-slate-900 to-green-600"></div>
@@ -136,23 +136,23 @@ function ProfileSetup({
       <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"></div>
 
       {/* Content */}
-      <div className="relative p-8 text-white">
+      <div className="relative p-5 sm:p-6 md:p-8 text-white">
 
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 mb-8">
 
-          <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center border border-white/30">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/20 flex items-center justify-center border border-white/30">
 
-            <FaUserCircle size={55} />
+            <FaUserCircle size={45} />
 
           </div>
 
           <div>
 
-            <h2 className="text-3xl font-bold">
+            <h2 className="text-2xl sm:text-3xl font-bold">
               Complete Your Profile
             </h2>
 
-            <p className="text-slate-200 mt-1">
+            <p className="text-slate-200 mt-1 text-sm sm:text-base">
               Help players discover and connect with you.
             </p>
 
@@ -162,7 +162,7 @@ function ProfileSetup({
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-5"
+          className="space-y-4 sm:space-y-5"
         >
 
           {/* Profile Photo */}
@@ -178,7 +178,7 @@ function ProfileSetup({
               onChange={
                 handleImageChange
               }
-              className="w-full bg-white/10 border border-white/20 rounded-xl p-3"
+              className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-sm sm:text-base"
             />
 
           </div>
@@ -200,7 +200,7 @@ function ProfileSetup({
               placeholder="Ahmedabad"
               value={profile.city}
               onChange={handleChange}
-              className="w-full bg-white/10 border border-white/20 rounded-xl p-3 placeholder-slate-300"
+              className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-sm sm:text-base placeholder-slate-300"
             />
 
           </div>
@@ -220,7 +220,7 @@ function ProfileSetup({
               name="sport"
               value={profile.sport}
               onChange={handleChange}
-              className="w-full bg-white/20 text-white border border-white/20 rounded-xl p-3"
+              className="w-full bg-white/20 text-white border border-white/20 rounded-xl p-3 text-sm sm:text-base"
             >
 
               <option value="" className="text-black">
@@ -264,6 +264,8 @@ function ProfileSetup({
           </div>
 
           {/* Skill Level */}
+
+                    {/* Skill Level */}
           <div>
 
             <label className="block mb-2 font-medium">
@@ -272,11 +274,9 @@ function ProfileSetup({
 
             <select
               name="skillLevel"
-              value={
-                profile.skillLevel
-              }
+              value={profile.skillLevel}
               onChange={handleChange}
-              className="w-full bg-white/20 text-white border border-white/20 rounded-xl p-3"
+              className="w-full bg-white/20 text-white border border-white/20 rounded-xl p-3 text-sm sm:text-base"
             >
 
               <option value="" className="text-black">
@@ -316,25 +316,25 @@ function ProfileSetup({
               placeholder="Tell players about yourself..."
               value={profile.bio}
               onChange={handleChange}
-              className="w-full bg-white/10 border border-white/20 rounded-xl p-3 placeholder-slate-300"
+              className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-sm sm:text-base placeholder-slate-300 resize-none"
             />
 
           </div>
 
           <button
-  type="submit"
-  disabled={loading}
-  className="w-full bg-white text-slate-900 font-bold py-4 rounded-xl transition disabled:opacity-70"
->
-  {loading ? (
-    <div className="flex items-center justify-center gap-2">
-      <div className="w-5 h-5 border-2 border-slate-700 border-t-transparent rounded-full animate-spin"></div>
-      Saving Profile...
-    </div>
-  ) : (
-    "Save Profile"
-  )}
-</button>
+            type="submit"
+            disabled={loading}
+            className="w-full bg-white text-slate-900 font-bold py-3 sm:py-4 rounded-xl transition disabled:opacity-70 text-sm sm:text-base hover:bg-slate-100"
+          >
+            {loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-5 h-5 border-2 border-slate-700 border-t-transparent rounded-full animate-spin"></div>
+                Saving Profile...
+              </div>
+            ) : (
+              "Save Profile"
+            )}
+          </button>
 
         </form>
 
