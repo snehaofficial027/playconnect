@@ -29,8 +29,12 @@ const server = http.createServer(app);
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://playconnect-oh39.vercel.app",
+    ],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
@@ -51,7 +55,15 @@ app.use(
   })
 );
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://playconnect-oh39.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
