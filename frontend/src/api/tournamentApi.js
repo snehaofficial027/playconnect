@@ -1,20 +1,14 @@
 import axios from "axios";
 import { API_URL } from "../config";
 
-const API = `${API_URL}/api/tournamnet`;
+const API = `${API_URL}/api/tournament`;
 
-const getToken = () => {
-  return localStorage.getItem("token");
-};
-
-/* ===========================
-   USER
-=========================== */
+const getToken = () => localStorage.getItem("token");
 
 // Create Tournament
 export const createTournament = (data) => {
   return axios.post(
-    `${API}/tournaments`,
+    `${API}/create`,
     data,
     {
       headers: {
@@ -26,32 +20,22 @@ export const createTournament = (data) => {
 
 // Get All Tournaments
 export const getTournaments = () => {
-  return axios.get(
-    `${API}/tournaments`,
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+  return axios.get(`${API}/all`);
 };
 
 // My Tournaments
 export const getMyTournaments = () => {
-  return axios.get(
-    `${API}/tournaments/my`,
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+  return axios.get(`${API}/my`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
 };
 
 // Join Tournament
 export const joinTournament = (id) => {
-  return axios.post(
-    `${API}/tournaments/${id}/join`,
+  return axios.put(
+    `${API}/join/${id}`,
     {},
     {
       headers: {
@@ -61,30 +45,7 @@ export const joinTournament = (id) => {
   );
 };
 
-/* ===========================
-   ADMIN
-=========================== */
-
-// Get All Tournaments (Admin)
-export const getAllTournaments = () => {
-  return axios.get(
-    `${API}/admin/tournaments`,
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
-};
-
-// Delete Tournament
-export const deleteTournament = (id) => {
-  return axios.delete(
-    `${API}/admin/tournaments/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+// Get Tournament Details
+export const getTournament = (id) => {
+  return axios.get(`${API}/${id}`);
 };
