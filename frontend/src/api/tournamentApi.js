@@ -49,3 +49,21 @@ export const joinTournament = (id) => {
 export const getTournament = (id) => {
   return axios.get(`${API}/${id}`);
 };
+
+// Admin - Get All Tournaments
+export const getAllTournaments = () => {
+  return axios.get(`${API}/all`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+};
+
+// Admin - Delete Tournament
+export const deleteTournament = (id) => {
+  return axios.delete(`${API}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+};
