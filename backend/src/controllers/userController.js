@@ -118,10 +118,10 @@ const getAllPlayers = async (
 ) => {
   try {
 
-    const players =
-await User.find(
+   const players = await User.find(
 {
-  _id: { $ne: req.user.id }
+  _id: { $ne: req.user.id },
+  role: "user"
 },
 "-password"
 );
