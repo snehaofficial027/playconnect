@@ -1,9 +1,8 @@
 import axios from "axios";
+import { API_URL } from "../config";
 
 // Base API (backend URL)
-const API = axios.create({
-  baseURL: "http://localhost:5000/api/venues",
-});
+const API = `${API_URL}/api/auth`;
 
 // Add Venue
 export const addVenue = (data) =>

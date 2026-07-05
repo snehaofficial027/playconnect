@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
+import { API_URL } from "../config";
 
 function TournamentDetails() {
 
@@ -24,8 +25,9 @@ function TournamentDetails() {
 
         const res =
           await axios.get(
-            `http://localhost:5000/api/tournament/${id}`
-          );
+`${API_URL}/api/tournament/${id}`
+);
+        
 
         setTournament(
           res.data.tournament

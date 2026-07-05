@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../api/authApi";
+import { API_URL } from "../config";
 
 function Login() {
   const navigate = useNavigate();
@@ -129,8 +130,8 @@ function Login() {
             <button
               type="button"
               onClick={() => {
-                window.location.href =
-                  "http://localhost:5000/api/auth/google";
+               window.location.href =
+`${API_URL}/api/auth/google`;
               }}
               className="w-full border mt-4 p-4 rounded-xl font-semibold hover:bg-gray-100 transition"
             >

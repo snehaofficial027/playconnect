@@ -1,7 +1,7 @@
 import axios from "axios";
+import { API_URL } from "../config";
 
-const API =
-"http://localhost:5000/api/connection";
+const API = `${API_URL}/api/connection`;
 
 const getToken = () =>
 localStorage.getItem("token");
@@ -11,7 +11,7 @@ export const sendRequest = (receiverId) => {
   const token = localStorage.getItem("token");
 
   return axios.post(
-    "http://localhost:5000/api/connection/send",
+    `${API}/send`,
     { receiverId },
     {
       headers:{

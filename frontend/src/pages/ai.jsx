@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+import { API_URL } from "../config";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -25,7 +25,7 @@ function AI() {
 
       const response = await axios.post(
 
-        "http://localhost:5000/api/ai/suggestion",
+       `${API_URL}/api/ai/suggestion`,
 
         {
 
