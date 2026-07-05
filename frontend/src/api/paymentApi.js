@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../config";
 
-const API = `${API_URL}/api/auth`;
+const API = `${API_URL}/api/payment`;
 
 export const createOrder = (amount) => {
 
