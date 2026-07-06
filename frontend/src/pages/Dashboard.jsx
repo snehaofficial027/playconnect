@@ -1,12 +1,16 @@
 import ProfileCard from "../components/ProfileCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import socket from "../socket";
 
 function Dashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user?.role === "admin") {
+   navigate("/admin");
+}
 
   useEffect(() => {
     if (user) {

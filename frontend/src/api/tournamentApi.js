@@ -52,7 +52,7 @@ export const getTournament = (id) => {
 
 // Admin - Get All Tournaments
 export const getAllTournaments = () => {
-  return axios.get(`${API}/all`, {
+  return axios.get(`${API_URL}/api/admin/tournaments`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
@@ -61,7 +61,7 @@ export const getAllTournaments = () => {
 
 // Admin - Delete Tournament
 export const deleteTournament = (id) => {
-  return axios.delete(`${API}/${id}`, {
+  return axios.delete(`${API_URL}/api/admin/tournaments/${id}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },

@@ -88,6 +88,7 @@ function Header() {
     localStorage.removeItem("user");
 
     navigate("/");
+      window.location.reload();
 
   };
 

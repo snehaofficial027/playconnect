@@ -21,6 +21,7 @@ function Navbar() {
     localStorage.removeItem("user");
 
     navigate("/");
+    window.location.reload();
 
   };
 

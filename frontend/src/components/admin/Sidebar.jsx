@@ -10,14 +10,15 @@ const Sidebar = () => {
 
   const handleLogout = () => {
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  localStorage.clear();
 
-    alert("Logged Out Successfully");
+  alert("Logged Out Successfully");
 
-    navigate("/login");
+  navigate("/login");
 
-  };
+  window.location.reload();
+
+};
 
   const closeMenu = () => setOpen(false);
 
