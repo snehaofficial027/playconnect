@@ -232,6 +232,12 @@ element={
   }
 />
 
+<Route
+  path="/ai"
+  element={<AISuggestions />}
+
+/>
+
       </Routes>
 
     </BrowserRouter>
