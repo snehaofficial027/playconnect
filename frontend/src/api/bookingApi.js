@@ -48,7 +48,7 @@ export const updateBookingStatus = (id, status) => {
 // Cancel Booking
 export const cancelBooking = (id) => {
   return axios.put(
-    `${API}/cancel/${id}`,
+   `${API}/${id}/cancel`,
     {},
     {
       headers: {
