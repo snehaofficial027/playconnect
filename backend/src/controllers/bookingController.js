@@ -118,10 +118,10 @@ const getMyBookings = async (req, res) => {
   try {
 
     const bookings = await Booking.find({
+  user: req.user.id,
+  status: { $ne: "Cancelled" },
+}).populate("venue");
 
-      user: req.user.id,
-
-    }).populate("venue");
 
     res.json(bookings);
 
@@ -145,7 +145,9 @@ const getAllBookings = async (req, res) => {
 
   try {
 
-    const bookings = await Booking.find()
+    const bookings = await Booking.find({
+    status: { $ne: "Cancelled" }
+})
 
       .populate("user")
 
@@ -230,15 +232,15 @@ const cancelBooking = async (req, res) => {
       });
     }
 
-    booking.status = "Cancelled";
+   booking.status = "Cancelled";
+await booking.save();
 
-    await booking.save();
-
-    res.json({
-      success: true,
-      message: "Booking Cancelled Successfully",
-      booking,
-    });
+res.json({
+  success: true,
+  message: "Booking Cancelled Successfully",
+  booking,
+});
+    
 
   } catch (err) {
 

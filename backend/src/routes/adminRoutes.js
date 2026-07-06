@@ -1,44 +1,44 @@
-const express = require("express");
-const router = express.Router();
+  const express = require("express");
+  const router = express.Router();
 
-const authMiddleware = require("../middleware/authMiddleware");
+  const authMiddleware = require("../middleware/authMiddleware");
 
-const {
-  getDashboard,
-  getAllTournaments,
-  deleteTournament,
-} = require("../controllers/adminController");
+  const {
+    getDashboard,
+    getAllTournaments,
+    deleteTournament,
+  } = require("../controllers/adminController");
 
-/*
-=====================================
-Dashboard
-=====================================
-*/
+  /*
+  =====================================
+  Dashboard
+  =====================================
+  */
 
-router.get(
-  "/dashboard",
-  authMiddleware,
-  getDashboard
-);
+  router.get(
+    "/dashboard",
+    authMiddleware,
+    getDashboard
+  );
 
-/*
-=====================================
-Tournament Management
-=====================================
-*/
+  /*
+  =====================================
+  Tournament Management
+  =====================================
+  */
 
-// Get All Tournaments
-router.get(
-  "/tournaments",
-  authMiddleware,
-  getAllTournaments
-);
+  // Get All Tournaments
+  router.get(
+    "/tournaments",
+    authMiddleware,
+    getAllTournaments
+  );
 
-// Delete Tournament
-router.delete(
-  "/tournaments/:id",
-  authMiddleware,
-  deleteTournament
-);
+  // Delete Tournament
+  router.delete(
+    "/tournaments/:id",
+    authMiddleware,
+    deleteTournament
+  );
 
-module.exports = router;
+  module.exports = router;
