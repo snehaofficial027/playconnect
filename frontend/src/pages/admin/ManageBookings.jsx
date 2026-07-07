@@ -142,6 +142,42 @@ const ManageBookings = () => {
                       Reject
                     </button>
 
+                    {booking.status === "Cancelled" ? (
+
+  <span className="text-red-600 font-bold">
+    Cancelled by User
+  </span>
+
+) : (
+
+  <>
+    <button
+      onClick={() =>
+        changeStatus(
+          booking._id,
+          "Approved"
+        )
+      }
+      className="bg-green-600 text-white px-3 py-2 rounded mr-2"
+    >
+      Approve
+    </button>
+
+    <button
+      onClick={() =>
+        changeStatus(
+          booking._id,
+          "Rejected"
+        )
+      }
+      className="bg-red-600 text-white px-3 py-2 rounded"
+    >
+      Reject
+    </button>
+  </>
+
+)}
+
                   </td>
 
                 </tr>
