@@ -99,86 +99,50 @@ const ManageBookings = () => {
                   <td className="font-bold text-green-600">
                      ₹ {booking.totalPrice}
                   </td>
-
-                  <td>
-
-                    <span
-                      className={`px-3 py-1 rounded text-white ${
-                        booking.status === "Approved"
-                          ? "bg-green-600"
-                          : booking.status === "Rejected"
-                          ? "bg-red-600"
-                          : "bg-yellow-500"
-                      }`}
-                    >
-                      {booking.status}
-                    </span>
-
-                  </td>
-
-                  <td>
-
-                    <button
-                      onClick={() =>
-                        changeStatus(
-                          booking._id,
-                          "Approved"
-                        )
-                      }
-                      className="bg-green-600 text-white px-3 py-2 rounded mr-2"
-                    >
-                      Approve
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        changeStatus(
-                          booking._id,
-                          "Rejected"
-                        )
-                      }
-                      className="bg-red-600 text-white px-3 py-2 rounded"
-                    >
-                      Reject
-                    </button>
-
-                    {booking.status === "Cancelled" ? (
-
-  <span className="text-red-600 font-bold">
-    Cancelled by User
+                  
+<td>
+  <span
+    className={`px-3 py-2 rounded font-semibold ${
+      booking.status === "Confirmed"
+        ? "bg-yellow-500 text-white"
+        : booking.status === "Approved"
+        ? "bg-green-600 text-white"
+        : booking.status === "Rejected"
+        ? "bg-red-600 text-white"
+        : "bg-gray-500 text-white"
+    }`}
+  >
+    {booking.status}
   </span>
+</td>
 
-) : (
+<td>
+  {booking.status === "Cancelled" ? (
+    <span className="text-red-600 font-bold">
+      Cancelled by User
+    </span>
+  ) : (
+    <>
+      <button
+        onClick={() =>
+          changeStatus(booking._id, "Approved")
+        }
+        className="bg-green-600 text-white px-3 py-2 rounded mr-2"
+      >
+        Approve
+      </button>
 
-  <>
-    <button
-      onClick={() =>
-        changeStatus(
-          booking._id,
-          "Approved"
-        )
-      }
-      className="bg-green-600 text-white px-3 py-2 rounded mr-2"
-    >
-      Approve
-    </button>
-
-    <button
-      onClick={() =>
-        changeStatus(
-          booking._id,
-          "Rejected"
-        )
-      }
-      className="bg-red-600 text-white px-3 py-2 rounded"
-    >
-      Reject
-    </button>
-  </>
-
-)}
-
-                  </td>
+      <button
+        onClick={() =>
+          changeStatus(booking._id, "Rejected")
+        }
+        className="bg-red-600 text-white px-3 py-2 rounded"
+      >
+        Reject
+      </button>
+    </>
+  )}
+</td>
 
                 </tr>
 
