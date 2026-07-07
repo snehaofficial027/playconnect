@@ -145,13 +145,10 @@ const getAllBookings = async (req, res) => {
 
   try {
 
-    const bookings = await Booking.find({
-    status: { $ne: "Cancelled" }
-})
-
-      .populate("user")
-
-      .populate("venue");
+   const bookings = await Booking.find()
+  .populate("user")
+  .populate("venue")
+  .sort({ createdAt: -1 });
 
     res.json(bookings);
 

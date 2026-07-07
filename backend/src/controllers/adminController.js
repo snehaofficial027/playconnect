@@ -11,11 +11,17 @@ Admin Dashboard
 const getDashboard = async (req, res) => {
   try {
 
-    const totalUsers = await User.countDocuments();
+    const totalUsers = await User.countDocuments({
+      role: "user",
+    });
 
     const totalVenues = await Venue.countDocuments();
 
-    const totalBookings = await Booking.countDocuments();
+    const totalBookings = await Booking.countDocuments({
+      status: {
+        $in: ["Confirmed", "Approved"],
+      },
+    });
 
     const totalTournaments =
       await Tournament.countDocuments();
@@ -28,7 +34,9 @@ const getDashboard = async (req, res) => {
         .limit(5);
 
     const latestUsers =
-      await User.find()
+      await User.find({
+        role: "user",
+      })
         .sort({ createdAt: -1 })
         .limit(5);
 
