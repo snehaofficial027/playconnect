@@ -64,23 +64,23 @@ function Hero() {
 
               <div className="flex flex-col sm:flex-row gap-4 mt-10">
 
-                <button
+<div className="flex flex-col sm:flex-row gap-4 mt-10">
 
-                  onClick={handleProtectedClick}
-
-                 className="bg-green-500 hover:bg-green-600 text-white w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition"
-
-                >
-
-                  🚀 Start Playing
-
-                </button>
-
-             <Link to="/venues">
-  <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-semibold transition">
-    🚀 Book Now
+  <button
+    onClick={() => navigate("/players")}
+    className="bg-green-500 hover:bg-green-600 text-white w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition"
+  >
+    🚀 Start Playing
   </button>
-</Link>
+
+  <button
+    onClick={() => navigate("/venues")}
+    className="bg-green-500 hover:bg-green-600 text-white w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition"
+  >
+    📍 Book Now
+  </button>
+
+</div>
 
               </div>
 

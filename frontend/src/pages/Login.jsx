@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../api/authApi";
 import { API_URL } from "../config";
+import { Navigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -10,6 +11,18 @@ function Login() {
     email: "",
     password: "",
   });
+
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (token) {
+    return (
+      <Navigate
+        to={user?.role === "admin" ? "/admin" : "/dashboard"}
+        replace
+      />
+    );
+  }
 
   const handleChange = (e) => {
     setFormData({
