@@ -38,18 +38,19 @@ GET ALL PLAYERS
 
 export const getPlayers = () => {
 
-  const token =
-    localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-  return axios.get(
-    `${API}/players`,
-    {
+  if (token) {
+    return axios.get(`${API}/players`, {
       headers: {
-        Authorization:
-          `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
-    }
-  );
+    });
+  }
+
+  // Guest user
+  return axios.get(`${API}/players`);
+
 };
 /*
 ========================

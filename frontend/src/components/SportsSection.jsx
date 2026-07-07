@@ -42,13 +42,9 @@ function SportsSection() {
 
   const isLoggedIn = !!localStorage.getItem("token");
 
-  const handleProtectedClick = () => {
-    if (isLoggedIn) {
-      navigate("/players");
-    } else {
-      setShowLoginPopup(true);
-    }
-  };
+ const handleFindPlayers = () => {
+  navigate("/players");
+};
 
   return (
     <>
@@ -84,11 +80,11 @@ function SportsSection() {
                 </p>
 
                 <button
-                  onClick={handleProtectedClick}
-                  className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
-                >
-                  👥 Find Players
-                </button>
+  onClick={handleFindPlayers}
+  className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
+>
+  👥 Find Players
+</button>
 
               </div>
             ))}
@@ -98,10 +94,6 @@ function SportsSection() {
         </div>
       </section>
 
-      <LoginRequiredModal
-        isOpen={showLoginPopup}
-        onClose={() => setShowLoginPopup(false)}
-      />
     </>
   );
 }

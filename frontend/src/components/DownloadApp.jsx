@@ -43,12 +43,22 @@ function DownloadApp() {
 
               <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl text-center w-full max-w-sm">
 
-                <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://playconnect.com"
-                  alt="QR Code"
-                  className="mx-auto w-44 h-44 sm:w-56 sm:h-56 object-contain"
-                />
+               <img
+  src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(
+    "https://playconnect-oh39.vercel.app"
+  )}`}
+  alt="QR Code"
+  className="mx-auto w-44 h-44 sm:w-56 sm:h-56 object-contain"
+/>
 
+<a
+  href="https://playconnect-oh39.vercel.app"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold transition"
+>
+  🌐 Open Website
+</a>
                 <p className="mt-4 text-slate-600 font-semibold text-base sm:text-lg">
                   Scan QR Code
                 </p>

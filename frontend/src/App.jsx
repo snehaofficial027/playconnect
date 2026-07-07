@@ -118,11 +118,7 @@ element={
 
 <Route
   path="/player/:id"
-  element={
-    <ProtectedRoute>
-      <PlayerProfile />
-    </ProtectedRoute>
-  }
+  element={<PlayerProfile />}
 />
 
 <Route
