@@ -11,9 +11,7 @@ UPDATE PROFILE
 const updateProfile = async (req, res) => {
   try {
 
-    const user = await User.findById(
-      req.user.id
-    );
+    const user = await User.findById(req.user.id);
 
     if (!user) {
       return res.status(404).json({
@@ -24,49 +22,51 @@ const updateProfile = async (req, res) => {
 
     user.city = req.body.city;
     user.sport = req.body.sport;
-    user.skillLevel =
-      req.body.skillLevel;
+    user.skillLevel = req.body.skillLevel;
     user.bio = req.body.bio;
 
     if (req.file) {
 
-  const result = await new Promise((resolve, reject) => {
+      const result = await new Promise((resolve, reject) => {
 
-    const stream = cloudinary.uploader.upload_stream(
-      {
-        folder: "playconnect_profiles",
-      },
-      (error, result) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "playconnect_profiles",
+          },
+          (error, result) => {
 
-        if (error) return reject(error);
+            if (error) return reject(error);
 
-        resolve(result);
+            resolve(result);
 
-      }
-    );
+          }
+        );
 
-    streamifier.createReadStream(req.file.buffer).pipe(stream);
+        streamifier
+          .createReadStream(req.file.buffer)
+          .pipe(stream);
 
-  });
+      });
 
-  user.profileImage = result.secure_url;
+      user.profileImage = result.secure_url;
 
-}
+    }
 
     await user.save();
 
     res.status(200).json({
       success: true,
-      message:
-        "Profile Updated Successfully",
+      message: "Profile Updated Successfully",
       user,
     });
 
   } catch (error) {
+
     res.status(500).json({
       success: false,
       message: error.message,
     });
+
   }
 };
 
@@ -75,21 +75,14 @@ const updateProfile = async (req, res) => {
 GET SINGLE PLAYER
 =================================
 */
-const getPlayerById = async (
-  req,
-  res
-) => {
+const getPlayerById = async (req, res) => {
   try {
 
-    const player =
-      await User.findById(
-        req.params.id
-      );
+    const player = await User.findById(req.params.id);
 
     if (!player) {
       return res.status(404).json({
-        message:
-          "Player not found",
+        message: "Player not found",
       });
     }
 
@@ -112,19 +105,12 @@ const getPlayerById = async (
 GET ALL PLAYERS
 =================================
 */
-const getAllPlayers = async (
-  req,
-  res
-) => {
+const getAllPlayers = async (req, res) => {
   try {
 
-   const players = await User.find(
-{
-  _id: { $ne: req.user.id },
-  role: "user"
-},
-"-password"
-);
+    const players = await User.find({
+      role: "user",
+    }).select("-password");
 
     res.status(200).json({
       success: true,
@@ -146,16 +132,10 @@ const getAllPlayers = async (
 GET PROFILE
 =================================
 */
-const getProfile = async (
-  req,
-  res
-) => {
+const getProfile = async (req, res) => {
   try {
 
-    const user =
-      await User.findById(
-        req.user.id
-      );
+    const user = await User.findById(req.user.id);
 
     res.status(200).json({
       success: true,
@@ -172,19 +152,37 @@ const getProfile = async (
   }
 };
 
-// Get All Users
+/*
+=================================
+ADMIN - GET ALL USERS
+=================================
+*/
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+
+    const users = await User.find({
+      role: "user",
+    }).select("-password");
+
     res.json(users);
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    res.status(500).json({
+      error: err.message,
+    });
+
   }
 };
 
-// Delete User
+/*
+=================================
+ADMIN - DELETE USER
+=================================
+*/
 const deleteUser = async (req, res) => {
   try {
+
     await User.findByIdAndDelete(req.params.id);
 
     res.json({
@@ -192,29 +190,40 @@ const deleteUser = async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    res.status(500).json({
+      error: err.message,
+    });
+
   }
 };
 
-// Change Role
+/*
+=================================
+ADMIN - CHANGE ROLE
+=================================
+*/
 const changeRole = async (req, res) => {
   try {
 
-    const user =
-      await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          role: req.body.role,
-        },
-        {
-          new: true,
-        }
-      );
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        role: req.body.role,
+      },
+      {
+        new: true,
+      }
+    );
 
     res.json(user);
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    res.status(500).json({
+      error: err.message,
+    });
+
   }
 };
 

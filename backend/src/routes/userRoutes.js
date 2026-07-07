@@ -54,7 +54,6 @@ GET ALL PLAYERS
 
 router.get(
   "/players",
-  authMiddleware,
   getAllPlayers
 );
 
