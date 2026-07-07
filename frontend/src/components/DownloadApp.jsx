@@ -51,14 +51,6 @@ function DownloadApp() {
   className="mx-auto w-44 h-44 sm:w-56 sm:h-56 object-contain"
 />
 
-<a
-  href="https://playconnect-oh39.vercel.app"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold transition"
->
-  🌐 Open Website
-</a>
                 <p className="mt-4 text-slate-600 font-semibold text-base sm:text-lg">
                   Scan QR Code
                 </p>
