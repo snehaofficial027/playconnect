@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import SportsSection from "../components/SportsSection";
@@ -9,6 +11,17 @@ import Footer from "../components/Footer";
 
 
 function Home() {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user?.role === "admin") {
+      navigate("/admin");
+    }
+  }, []);
+  
   return (
     <>
       <Navbar />

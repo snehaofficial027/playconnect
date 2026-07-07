@@ -6,17 +6,21 @@ import { useEffect } from "react";
 import socket from "../socket";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  if (user?.role === "admin") {
-   navigate("/admin");
-}
+ useEffect(() => {
 
-  useEffect(() => {
-    if (user) {
-      socket.emit("join", user.id);
-    }
-  }, []);
+  if (user?.role === "admin") {
+    navigate("/admin");
+    return;
+  }
+
+  if (user) {
+    socket.emit("join", user.id);
+  }
+
+}, [navigate]);
 
   return (
     <>
