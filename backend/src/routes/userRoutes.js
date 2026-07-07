@@ -27,7 +27,6 @@ GET PLAYER BY ID
 
 router.get(
   "/player/:id",
-  authMiddleware,
   getPlayerById
 );
 
