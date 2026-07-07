@@ -172,40 +172,37 @@ const updateBookingStatus = async (req, res) => {
 
   try {
 
-    const booking = await Booking.findByIdAndUpdate(
+    const booking = await Booking.findById(req.params.id);
 
-      req.params.id,
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
 
-      {
+    // User cancelled booking
+    if (booking.status === "Cancelled") {
+      return res.status(400).json({
+        success: false,
+        message: "Cancelled booking cannot be updated",
+      });
+    }
 
-        status: req.body.status,
+    booking.status = req.body.status;
 
-      },
-
-      {
-
-        new: true,
-
-      }
-
-    );
+    await booking.save();
 
     res.json({
-
       success: true,
-
       booking,
-
     });
 
   } catch (err) {
 
     res.status(500).json({
-
       success: false,
-
       message: err.message,
-
     });
 
   }
