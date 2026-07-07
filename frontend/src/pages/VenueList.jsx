@@ -25,6 +25,21 @@ const VenueList = () => {
     }
   };
 
+  // ===============================
+  // BOOK NOW
+  // ===============================
+  const handleBook = (venueId) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login to book a venue.");
+      navigate("/login");
+      return;
+    }
+
+    navigate(`/venue/${venueId}`);
+  };
+
   return (
     <>
       <Header />
@@ -107,9 +122,7 @@ const VenueList = () => {
                       </button>
 
                       <button
-                        onClick={() =>
-                          navigate(`/venue/${venue._id}`)
-                        }
+                        onClick={() => handleBook(venue._id)}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold"
                       >
                         Book Now

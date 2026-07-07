@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginRequiredModal from "./LoginRequiredModal";
 
 function Hero() {
@@ -12,17 +12,17 @@ function Hero() {
 
   const handleProtectedClick = () => {
 
-    if (isLoggedIn) {
+  if (isLoggedIn) {
 
-      navigate("/dashboard");
+    navigate("/players");
 
-    } else {
+  } else {
 
-      setShowLoginPopup(true);
+    setShowLoginPopup(true);
 
-    }
+  }
 
-  };
+};
 
   return (
 
@@ -76,17 +76,11 @@ function Hero() {
 
                 </button>
 
-                <button
-
-                  onClick={handleProtectedClick}
-
-                  className="bg-white hover:bg-gray-100 text-slate-900 w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition"
-
-                >
-
-                  🔍 Explore Sports
-
-                </button>
+             <Link to="/venues">
+  <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-semibold transition">
+    🚀 Book Now
+  </button>
+</Link>
 
               </div>
 
